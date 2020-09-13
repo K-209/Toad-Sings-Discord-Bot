@@ -11,6 +11,9 @@ BOT_PREFIX = '/'
 
 bot = commands.Bot(command_prefix=BOT_PREFIX)
 
+raise OpusNotLoaded()
+discord.opus.OpusNotLoaded
+
 @bot.event
 async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("Still Beta"))
