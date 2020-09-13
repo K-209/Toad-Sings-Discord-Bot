@@ -1,1 +1,1 @@
-worker: python Toad Sings.py
+worker: python bot.py
