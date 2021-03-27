@@ -6,16 +6,30 @@ import os
 import shutil
 from os import system
 
-TOKEN = ""
-BOT_PREFIX = '/'
+TOKEN = "NzE3ODM3NjI0MTczMzk2MDQw.XtgIYg._Lh-xUJqSOrnN5T2wIjTCviZ00I"
+BOT_PREFIX = '?'
 
 bot = commands.Bot(command_prefix=BOT_PREFIX)
+bot.remove_command('help')
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("Still Beta"))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("?help | Still Beta"))
     print("Logged in as: " + bot.user.name + "\n")
 
+@bot.command(pass_context=True)
+async def help(ctx):
+    embed=discord.Embed(title="Toad Sings Help Commands", color=0x680af5)
+    embed.add_field(name="/join", value="Toad Sings joins the current voice call as you are.", inline=True)
+    embed.add_field(name="/play *Insert YouTube Link*", value="Toad Sings plays the youtube link that has been given. Toad Sings only supports Youtube currently. Youtube titles Won't work. It **Must** be links. ", inline=False)
+    embed.add_field(name="/dc", value="Toad Sings disconnects from current voice call.", inline=False)
+    embed.add_field(name="/pause", value="Toad Sings will pause the current song playing.", inline=False)
+    embed.add_field(name="/resume", value="Toad Sings will resume the current song playing.", inline=False)
+    embed.add_field(name="/stop", value="Toad Sings will stop or delete the current song/playlist", inline=False)
+    embed.add_field(name="/queue *Insert YouTube Link*", value="Toad Sings will play the Youtube Link provided by you. **No other providers are supported.**", inline=False)
+    embed.add_field(name="/skip", value="Toad Sings will skip the current song from being played.", inline=False)
+
+    await ctx.send(embed=embed)
 
 @bot.command(pass_context=True, aliases=['j', 'Joi'])
 async def join(ctx):
@@ -27,19 +41,12 @@ async def join(ctx):
         await voice.move_to(channel)
     else:
         voice = await channel.connect()
-
-    await voice.disconnect()
-
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
         print(f"The bot has connected to {channel}\n")
 
     await ctx.send(f"Joined {channel}")
 
-@bot.command(pass_context=True, aliases=['b', 'by'])
-async def bye(ctx):
+@bot.command(pass_context=True, aliases=['dis', 'disconnect'])
+async def dc(ctx):
     channel = ctx.message.author.voice.channel
     voice = get(bot.voice_clients, guild=ctx.guild)
 
@@ -48,14 +55,14 @@ async def bye(ctx):
         print(f"The bot has left {channel}")
         await ctx.send(f"Toad has left {channel}")
     else:
-        print("Bot was told to leave voice channel, but was not in one")
+        print("Toad thinks you weren't in a voice channel")
         await ctx.send("Toad thinks you weren't in a voice channel")
-
-
 
 @bot.command(pass_context=True, aliases=['p', 'pla'])
 async def play(ctx, url: str):
-
+    channel = ctx.author.voice.channel
+    await channel.connect()
+    await ctx.message.delete()
     def check_queue():
         Queue_infile = os.path.isdir("./Queue")
         if Queue_infile is True:
@@ -83,12 +90,11 @@ async def play(ctx, url: str):
 
             voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
             voice.source = discord.PCMVolumeTransformer(voice.source)
-            voice.source.volume = 0.95
+            voice.source.volume = 1.00
 
         else:
             queues.clear()
             return
-
 
     song_there = os.path.isfile("song.mp3")
     try:
@@ -100,12 +106,6 @@ async def play(ctx, url: str):
         print("Trying to delete song file, but it's being played")
         await ctx.send("ERROR: Music playing")
         return
-
-
-
-
-
-
 
     Queue_infile = os.path.isdir("./Queue")
     try:
@@ -138,7 +138,6 @@ async def play(ctx, url: str):
         c_path = os.path.dirname(os.path.realpath(__file__))
         system("spotdl -f " + '""' + c_path + '""' + " -s " + url)
 
-
     for file in os.listdir("./"):
         if file.endswith(".mp3"):
             name = file
@@ -147,13 +146,11 @@ async def play(ctx, url: str):
 
     voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
     voice.source = discord.PCMVolumeTransformer(voice.source)
-    voice.source.volume = 0.95
+    voice.source.volume = 1.00
 
     nname = name.rsplit("-", 2)
     await ctx.send(f"Playing: {nname[0]}")
     print("playing\n")
-
-
 
 @bot.command(pass_context=True, aliases=['pa', 'pau'])
 async def pause(ctx):
@@ -168,7 +165,6 @@ async def pause(ctx):
         print("Music not playing failed paused")
         await ctx.send("Music not playing failed paused")
 
-
 @bot.command(pass_context=True, aliases=['r', 'res'])
 async def resume(ctx):
 
@@ -181,7 +177,6 @@ async def resume(ctx):
     else:
         print("Music is not paused")
         await ctx.send("Music is not paused")
-
 
 @bot.command(pass_context=True, aliases=['s', 'sto'])
 async def stop(ctx):
@@ -200,7 +195,6 @@ async def stop(ctx):
     else:
         print("No music playing failed to stop")
         await ctx.send("No music is playing failed to stop")
-
 
 queues = {}
 
@@ -246,17 +240,16 @@ async def queue(ctx, url: str):
 
     print("Song added to queue\n")
 
-
-@bot.command(pass_context=True, aliases=['n', 'nex'])
-async def next(ctx):
+@bot.command(pass_context=True, aliases=['sk', 'ski'])
+async def skip(ctx):
     voice = get(bot.voice_clients, guild=ctx.guild)
 
     if voice and voice.is_playing():
-        print("Playing next song")
+        print("Skipping current song. Playing next song!")
         voice.stop()
         await ctx.send("Next Song")
     else:
-        print("No music playing failed to playing next song")
+        print("ERROR:05B26. Whoops that was not supposed to happen. Please do me a favour and contact the local Developer about this Error.")
         await ctx.send("No music playing failed")
 
 
