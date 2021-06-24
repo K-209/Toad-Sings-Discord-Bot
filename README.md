@@ -1,4 +1,4 @@
 # Toad-Sings-Discord-Bot
-Prefix: ?
-Help command is ?help
+- Prefix: ?
+- Help command is ?help
 Enjoy
