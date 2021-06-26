@@ -9,7 +9,7 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Game("?help | Still Beta"))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game("?help | Working Carefully"))
     print("Logged in as: " + client.user.name + "\n")
 
 @client.command(aliases=["refresh"])

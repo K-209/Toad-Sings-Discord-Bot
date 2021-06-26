@@ -10,13 +10,12 @@ class controls(commands.Cog):
         '  Join Control Commmand  '
         global voice
         channel = ctx.message.author.voice.channel
-        voice = get(client.voice_clients, guild=ctx.guild)
+        voice = get(self.client.voice_clients, guild=ctx.guild)
 
         if voice and voice.is_connected():
             await voice.move_to(channel)
         else:
             voice = await channel.connect()
-            print(f"The bot has connected to {channel}\n")
 
         await ctx.send(f"Joined {channel}") 
 
@@ -24,7 +23,7 @@ class controls(commands.Cog):
     async def disconnect(self, ctx):
         '  Disconnect Control Commmand  '
         channel = ctx.message.author.voice.channel
-        voice = get(client.voice_clients, guild=ctx.guild)
+        voice = get(self.client.voice_clients, guild=ctx.guild)
 
         if voice and voice.is_connected():
             await voice.disconnect()
@@ -35,7 +34,7 @@ class controls(commands.Cog):
     @commands.command(pass_context=True, aliases=['pa', 'pau'])
     async def pause(self, ctx):
         '  Pause Control Commmand  '
-        voice = get(client.voice_clients, guild=ctx.guild)
+        voice = get(self.client.voice_clients, guild=ctx.guild)
 
         if voice and voice.is_playing():
             voice.pause()
@@ -46,7 +45,7 @@ class controls(commands.Cog):
     @commands.command(pass_context=True, aliases=['r', 'res'])
     async def resume(self, ctx):
         '  Resume Control Commmand  '
-        voice = get(client.voice_clients, guild=ctx.guild)
+        voice = get(self.client.voice_clients, guild=ctx.guild)
 
         if voice and voice.is_paused():
             voice.resume()
