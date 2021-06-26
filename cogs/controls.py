@@ -16,7 +16,6 @@ class controls(commands.Cog):
             await voice.move_to(channel)
         else:
             voice = await channel.connect()
-
         await ctx.send(f"Joined {channel}") 
 
     @commands.command(pass_context=True, aliases=['dis', 'dc'])
@@ -27,9 +26,11 @@ class controls(commands.Cog):
 
         if voice and voice.is_connected():
             await voice.disconnect()
-            await ctx.send(f"Toad has left {channel}")
+            embed = discord.Embed(title="Disconnected Successfully", description=f"Toad has left {channel}", color=0x00FF00)
+            await ctx.send(embed=embed)
         else:
-            await ctx.send("Toad thinks you weren't in a voice channel")          
+            embed = discord.Embed(title="Error: Cannot Disconnect", description=f"Toad thinks you weren't in a voice channel", color=0xff0000)
+            await ctx.send(embed=embed)         
 
     @commands.command(pass_context=True, aliases=['pa', 'pau'])
     async def pause(self, ctx):
