@@ -30,7 +30,7 @@ class music(commands.Cog):
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
-                'preferredquality': '192',
+                'preferredquality': '320',
             }],
         }
 
@@ -46,7 +46,7 @@ class music(commands.Cog):
 
         voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: print("Song done!"))
         voice.source = discord.PCMVolumeTransformer(voice.source)
-        voice.source.volume = 1.00
+        voice.source.volume = 0.09
 
         nname = name.rsplit("-", 2)
         await ctx.send(f"Playing: {nname[0]}")
