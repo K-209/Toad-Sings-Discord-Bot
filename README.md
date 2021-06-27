@@ -10,4 +10,5 @@ Toad Sings is a Discord music bot which can play any link on youtube using Youtu
 ## Commands:
 - Prefix: ?
 - Help command is ?help
-Enjoy
+
+##Enjoy!
