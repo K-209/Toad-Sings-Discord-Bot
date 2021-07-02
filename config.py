@@ -6,7 +6,6 @@ from os import system
 from discord.ext import commands
 from discord.utils import get
 from discord.ext.commands import MissingPermissions
-from discord.types import voice
 
 ################################################################
 BOT_PREFIX = '?'
