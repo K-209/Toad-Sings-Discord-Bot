@@ -8,7 +8,7 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if self.client.user.mentioned_in(message):
-            embed=discord.Embed(title="Hello, I'm Toad Sings!", description="My default prefix is `3`. Hope this helps!", color=0x176cd5)
+            embed=discord.Embed(title="Hello, I'm Toad Sings!", description=f"My default prefix is `{BOT_PREFIX}`. Hope this helps!", color=0x176cd5)
             await message.reply(embed=embed)
 
     '  The Errorhandling  '
@@ -18,7 +18,7 @@ class events(commands.Cog):
             return
    
     '  The Errorhandling  '
-    #@commands.Cog.listener()
+    @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandError):
             await ctx.reply(f">>> **I just found an error!**\n{error}")  # Errormessage
