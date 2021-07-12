@@ -1,5 +1,5 @@
 '  Importing from config.py  '
-from config import *
+from data.config import *
 from asyncio import queues
 
 class music(commands.Cog):

@@ -1,5 +1,17 @@
 from config import *
 
+
+if os.path.exists(os.getcwd() + "/data/config.json"):
+    with open("./data/config.json") as f:
+        configData = json.load(f)
+else:
+    configTemplate = {"Token": "", "Prefix": "?"}
+    with open(os.getcwd() + "/data/config.json", "w+") as f:
+        json.dump(configTemplate, f)
+
+TOKEN = configData["Token"]
+BOT_PREFIX = configData["Prefix"]
+
 client = commands.Bot(command_prefix=BOT_PREFIX)
 client.remove_command('help')
 

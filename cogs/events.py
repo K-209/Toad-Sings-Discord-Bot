@@ -1,5 +1,5 @@
 '  Importing from config.py  '
-from config import *
+from data.config import *
 
 class events(commands.Cog):
     def __init__(self, client):
@@ -8,7 +8,7 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if self.client.user.mentioned_in(message):
-            embed=discord.Embed(title="Hello, I'm Toad Sings!", description=f"My default prefix is `{BOT_PREFIX}`. Hope this helps!", color=0x176cd5)
+            embed=discord.Embed(title="Hello, I'm Toad Sings!", description="My default prefix is `?`. Hope this helps!", color=0x176cd5)
             await message.reply(embed=embed)
 
     '  The Errorhandling  '
