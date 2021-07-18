@@ -15,4 +15,5 @@ You Can also change the prefix in the config.json where it says "Prefix:".
 - Prefix: ?
 - Help command is ?help
 
-## Enjoy!
+## Made with:
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
